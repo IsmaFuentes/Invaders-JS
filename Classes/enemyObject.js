@@ -46,7 +46,7 @@ class enemyObject extends shipObject
 
 	shot()
 	{
-		var probability = Math.floor(Math.random() * 2000);
+		var probability = Math.floor(Math.random() * 1000);
 
 		if(probability / 100 < this.cadence)
 		{

@@ -8,8 +8,8 @@ window.onload = function()
 }
 	
 	// CONSTANTS
-	const CANVAS_WIDTH = 600;
-	const CANVAS_HEIGHT = 800;
+	const CANVAS_WIDTH = 550;
+	const CANVAS_HEIGHT = 700;
 	const PLAYER_SPEED = 3;
 	
 	// VARIABLES
@@ -23,7 +23,7 @@ window.onload = function()
 
 	// GAME OBJECTS
 	var canvas = new gameWindow(canvas,CANVAS_WIDTH,CANVAS_HEIGHT,ctx);
-	var player = new playerObject(270,700,50,50,ctx,canvas,"image","img/ship.png");
+	var player = new playerObject(250,600,50,50,ctx,canvas,"image","img/ship.png");
 
 
 
@@ -38,7 +38,7 @@ window.onload = function()
 		player.show();
 
 		// creates the first round of enemies
-		createEnemies(10,1);
+		createEnemies(9,1);
 
 		interval = setInterval(updateArea,10);
 	}
@@ -133,7 +133,7 @@ window.onload = function()
 	{
 		if(enemies.length == 0)
 		{
-			createEnemies(10,1);
+			createEnemies(9,1);
 		}
 	}
 

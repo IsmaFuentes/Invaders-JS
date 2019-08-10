@@ -19,5 +19,14 @@ class shipObject
 	move()
 	{
 		this.x += this.speedX;
+
+		if(this.x <= 0) // left border
+		{
+			this.x = 0;
+		}
+		else if(this.x >= 500) // rigth border
+		{
+			this.x = 500;
+		}
 	}
 }

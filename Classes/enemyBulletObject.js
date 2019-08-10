@@ -14,7 +14,7 @@ class enemyBulletObject extends bulletObject
 
 	move()
 	{
-		this.y -= -1;
+		this.y -= -2;
 		this.show();
 	}
 }
