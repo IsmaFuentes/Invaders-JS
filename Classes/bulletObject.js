@@ -32,7 +32,7 @@ class bulletObject
 
 	hasCollideWithPlayer(bullet,object)// REVISAR
 	{
-		if(bullet.y == object.y + object.height-30 && bullet.x < object.x + object.width && bullet.x > object.x)
+		if(bullet.y === object.y + object.height-30 && bullet.x < object.x + object.width && bullet.x > object.x)
 		{
 			return true;
 		}
