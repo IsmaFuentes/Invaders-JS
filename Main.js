@@ -1,37 +1,38 @@
-// window onload
-window.onload = function () {
-    // FUNCTION CALLS
-    gameStart();
+// WINDOW ONLOAD
+window.onload = function()
+{
+	gameStart();
 
-    KeyListener();
-};
+	KeyListener();
+}
 	
 	// CONSTANTS
 	const CANVAS_WIDTH = 550;
 	const CANVAS_HEIGHT = 700;
 	const PLAYER_SPEED = 3;
+	const CANVAS = document.getElementById("Window");
+	const CTX = CANVAS.getContext("2d");
 	
 	// VARIABLES
-	var Canvas = document.getElementById("Window"); // changed
-	var ctx = Canvas.getContext("2d");
 	var keys = [];
 	var bullets = [];
 	var enemyBullets = [];
 	var enemies = [];
-	var interval;
 
 	// GAME OBJECTS
-    var canvas = new gameWindow(Canvas,CANVAS_WIDTH,CANVAS_HEIGHT,ctx);
-	var player = new playerObject(250,600,50,50,ctx,canvas,"image","img/ship.png");
+	var game = new gameWindow(CANVAS,CANVAS_WIDTH,CANVAS_HEIGHT,CTX);
+	var player = new playerObject(250,600,50,50,CTX,CANVAS,"image","img/ship.png");
 
-
-
+	// GAME INTERVAL
+	var interval = {
+		initialize: function(){ setInterval(updateArea,10);},
+		clear: function(){clearInterval(interval);}
+	};
 
 	// MAIN FUNCTIONS
-
 	function gameStart()
 	{
-		canvas.initialize();
+		game.initialize();
 
 		// initializes player
 		player.show();
@@ -39,13 +40,13 @@ window.onload = function () {
 		// creates the first round of enemies
 		createEnemies(9,1);
 
-		interval = setInterval(updateArea,10);
+		interval.initialize();
 	}
 
 	// GAME REFRESH - MAIN LOOP
 	function updateArea()
 	{
-		canvas.clear();
+		game.clear();
 		player.show();
 		playerMovement();
 		bulletMovement();
@@ -57,7 +58,6 @@ window.onload = function () {
 
 
 	//	MOVEMENT
-
 	function playerMovement()
 	{
 		player.speedX = 0;
@@ -69,7 +69,7 @@ window.onload = function () {
 
 		if(keys[32])
 		{
-			var bullet = new bulletObject(player.x + 23.5, player.y,3,4,ctx);
+			let bullet = new bulletObject(player.x + 23.5, player.y,3,4,CTX);
 			bullets.push(bullet);
 			keys[32] = false;
 		}
@@ -87,7 +87,7 @@ window.onload = function () {
 
 	function bulletMovement()
 	{
-		if(bullets.length !== 0)
+		if(bullets.length != 0)
 		{
 			for(let i = 0; i < bullets.length; i++)
 			{
@@ -97,7 +97,7 @@ window.onload = function () {
 			}	
 		}
 
-		if(enemyBullets.length !== 0)
+		if(enemyBullets.length != 0)
 		{
 			for(let i = 0; i < enemyBullets.length; i++)
 			{
@@ -108,29 +108,26 @@ window.onload = function () {
 		}
 	}
 
-
 	// ENEMIES
-
 	function createEnemies(num1,num2)
 	{
 		for(let i = 0; i < num1; i++)
 		{
-			let enemy = new enemyObject(60+i*50,70,35,40,ctx,canvas,"image","img/enemie.gif",0.02,enemyBullets);
+			let enemy = new enemyObject(60+i*50,70,35,40,CTX,CANVAS,"image","img/enemie.gif",0.02,enemyBullets);
 			enemies.push(enemy);
 
 			for(let j = 0; j < num2; j++)
 			{
-				let enemy = new enemyObject(60+i*50,20,35,40,ctx,canvas,"image","img/enemie.gif",0.02,enemyBullets);
+				let enemy = new enemyObject(60+i*50,20,35,40,CTX,CANVAS,"image","img/enemie.gif",0.02,enemyBullets);
 				enemies.push(enemy);
 			}
 		}
 	}
 
-
 	// ROUNDS & OTHERS
 	function newRound()
 	{
-		if(enemies.length === 0)
+		if(enemies.length == 0)
 		{
 			createEnemies(9,1);
 		}
@@ -138,11 +135,12 @@ window.onload = function () {
 
 	function gameOver()
 	{
-		if(player.lifes === 0)
+		if(player.lifes == 0)
 		{
-			clearInterval(interval);
-			canvas.clear();
-			message("GAME OVER",ctx);
+			//clearInterval(interval);
+			interval.clear();
+			game.clear();
+			message("GAME OVER",CTX);
 		}
 	}
 
@@ -155,17 +153,17 @@ window.onload = function () {
 	}
 
 	// KEY LISTENER
-
 	function KeyListener()
 	{
-        window.addEventListener('keydown', function (e) {
-            keys[e.keyCode] = true;
-        });
-        window.addEventListener('keyup', function (e) {
-            keys[e.keyCode] = false;
-        });
+		window.addEventListener('keydown', function(e){
+			keys[e.keyCode] = true;
+		})
+		window.addEventListener('keyup', function(e){
+			keys[e.keyCode] = false;
+		})
 	}
 
+	// COLLISIONS
 	function CollideListener()
 	{
 		// collisions player bullet / enemy
@@ -182,7 +180,7 @@ window.onload = function () {
 			}
 
 			// if bullet surpases the top of the canvas
-			if(bullets[i] !== null && bullets[i].y === 0)
+			if(bullets[i] != null && bullets[i].y == 0)
 			{
 				bullets.splice(i,1);
 			}	
@@ -198,7 +196,7 @@ window.onload = function () {
 			}
 
 			// if bullet surpases the bottom of the canvas
-			if(enemyBullets[i] !== null && enemyBullets[i].y === 800)
+			if(enemyBullets[i] != null && enemyBullets[i].y == 800)
 			{
 				enemyBullets.splice(i,1);
 			}	

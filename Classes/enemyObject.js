@@ -50,7 +50,7 @@ class enemyObject extends shipObject
 
 		if(probability / 100 < this.cadence)
 		{
-			var bullet = new enemyBulletObject(this.x+15,this.y+15,3,4,ctx);
+			var bullet = new enemyBulletObject(this.x+15,this.y+15,3,4,CTX);
 			this.array.push(bullet);
 		}
 	}
